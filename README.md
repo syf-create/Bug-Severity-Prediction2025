@@ -38,7 +38,7 @@ This folder contains all code and scripts for all of the experiments including c
 ## Running CS-MSFL Model Experiments
 
 1.  `cd BugSeverityPrediction2025-main/experiments/models/code_representation/codebert`
-2.  Set `CodeBERT` as the `model_arch` parameter's value in `train.sh` file
+2.  Set `CodeBERT`、`EL_CodeBert` as the `model_arch` parameter's value in `train.sh` file
 3.  `bash train.sh` for training the model
 4.  `bash inference.sh` for evaluating the model with the `test` split
 5.  Results are generated in the `log` folder。
