@@ -38,7 +38,24 @@ This folder contains all code and scripts for all of the experiments including c
 ## Running CS-MSFL Model Experiments
 
 1.  `cd BugSeverityPrediction2025-main/experiments/models/code_representation/codebert`
-2.  Set `CodeBERT`、`EL_CodeBert` as the `model_arch` parameter's value in `train.sh` file
+2.  Set `EL_CodeBert` as the `model_arch` parameter's value in `train.sh` file
+3.  `bash train.sh` for training the model
+4.  `bash inference.sh` for evaluating the model with the `test` split
+5.  Results are generated in the `log` folder。
+
+## Run Ablation Experiments
+
+### Ablation Experiment 1: Evaluating the effect of excluding the MSIF module (with the CWO module included)
+1.  `cd BugSeverityPrediction2025-main/experiments/models/code_representation/codebert`
+2.  Set `CodeBERT` as the `model_arch` parameter's value in `train.sh` file
+3.  `bash train.sh` for training the model
+4.  `bash inference.sh` for evaluating the model with the `test` split
+5.  Results are generated in the `log` folder。
+
+### Ablation Experiment 2: Evaluating the effect of excluding the CWO module
+Method: Edit the main function and comment out or delete the call to RunDE.
+1.  `cd BugSeverityPrediction2025-main/experiments/models/code_representation/codebert`
+2.  Set `EL_CodeBert` as the `model_arch` parameter's value in `train.sh` file
 3.  `bash train.sh` for training the model
 4.  `bash inference.sh` for evaluating the model with the `test` split
 5.  Results are generated in the `log` folder。
