@@ -43,12 +43,6 @@ class CodeBertModel(nn.Module):
         logits = output
         prob = torch.softmax(logits, -1)
 
-        # if labels is not None:
-        #     loss_fct = nn.CrossEntropyLoss(ignore_index=-1)
-        #     loss = loss_fct(logits, labels)
-        #     return loss, prob
-        # else:
-        #     return prob
         if labels is not None:
             # 使用权重计算损失
             if self.class_weights is not None:
