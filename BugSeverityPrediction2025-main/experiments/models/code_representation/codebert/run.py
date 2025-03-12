@@ -89,30 +89,6 @@ def el_codebert(js, tokenizer, args):
     source_ids += [tokenizer.pad_token_id] * padding_length
     return InputFeatures(source_tokens, source_ids, attention_mask, js['label'], num_features)
 
-def el_codebertwoattention(js, tokenizer, args):
-    num_features = []
-    code = ' '.join(js['code_no_comment'].split())
-    code_tokens = tokenizer.tokenize(code)
-    code_tokens = code_tokens[: args.block_size - 2]
-    source_tokens = [tokenizer.cls_token] + code_tokens + [tokenizer.eos_token]
-    source_ids = tokenizer.convert_tokens_to_ids(source_tokens)
-    padding_length = args.block_size - len(source_ids)
-    attention_mask = [1] * len(source_ids) + [0] * padding_length
-    source_ids += [tokenizer.pad_token_id] * padding_length
-    return InputFeatures(source_tokens, source_ids, attention_mask, js['label'], num_features)
-
-def el_codebertwolstm(js, tokenizer, args):
-    num_features = []
-    code = ' '.join(js['code_no_comment'].split())
-    code_tokens = tokenizer.tokenize(code)
-    code_tokens = code_tokens[: args.block_size - 2]
-    source_tokens = [tokenizer.cls_token] + code_tokens + [tokenizer.eos_token]
-    source_ids = tokenizer.convert_tokens_to_ids(source_tokens)
-    padding_length = args.block_size - len(source_ids)
-    attention_mask = [1] * len(source_ids) + [0] * padding_length
-    source_ids += [tokenizer.pad_token_id] * padding_length
-    return InputFeatures(source_tokens, source_ids, attention_mask, js['label'], num_features)
-
 
 # creating features based on args value for different architectures
 def convert_examples_to_features(js, tokenizer, args):
