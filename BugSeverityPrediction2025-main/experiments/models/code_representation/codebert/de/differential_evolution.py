@@ -92,56 +92,6 @@ class DEAlgorithm:
 
         return logic_
 
-    # def mutation(self,InitialArray,F_l,F_u):
-    #     '''
-    #     mutation function
-    #     :param InitialArray: initialized population
-    #     :return: mutated population
-    #     '''
-    #     ArryLi = InitialArray.copy()
-    #     for i in range(len(ArryLi)):
-    #         Contin = True
-    #         while Contin:
-    #             F = np.random.uniform(low=F_l, high=F_u, size=1)[0]
-    #             idxlist = list(range(len(ArryLi)))
-    #             idxlist.remove(i)
-    #             idxLI = random.sample(idxlist, 3)
-    #             mu_a = self.listminus(ArryLi[idxLI[1]],ArryLi[idxLI[2]])
-    #             mu_b = self.multply(F,mu_a)
-    #             mu_c = self.listadd(ArryLi[idxLI[0]],mu_b)
-    #             if self.inrange(mu_c):
-    #                 ArryLi[i] = mu_c
-    #                 Contin = False
-    #
-    #     return ArryLi
-
-
-
-    # def mutation(self,InitialArray,μ_F,μ_Cr):
-    #     '''
-    #     mutation function
-    #     :param InitialArray: initialized population
-    #     :return: mutated population
-    #     '''
-    #     ArryLi = InitialArray.copy()
-    #     for i in range(len(ArryLi)):
-    #         Contin = True
-    #         while Contin:
-    #             # 使用 generate_F_Cr 获取 F
-    #             F, _ = self.generate_F_Cr(μ_F=μ_F, μ_Cr=μ_Cr)  # 假设 μ_F 取中值 F_l 和 F_u 的均值
-    #
-    #             idxlist = list(range(len(ArryLi)))
-    #             idxlist.remove(i)
-    #             idxLI = random.sample(idxlist, 3)
-    #             mu_a = self.listminus(ArryLi[idxLI[1]],ArryLi[idxLI[2]])
-    #             mu_b = self.multply(F,mu_a)
-    #             mu_c = self.listadd(ArryLi[idxLI[0]],mu_b)
-    #             if self.inrange(mu_c):
-    #                 ArryLi[i] = mu_c
-    #                 Contin = False
-    #
-    #     return ArryLi
-
     def mutation(self, InitialArray, μ_F, μ_Cr):
         '''
         Mutation function
@@ -174,28 +124,6 @@ class DEAlgorithm:
                     Contin = False
 
         return ArryLi
-
-    # def crossover(self,InitialArray,MutatedArray):
-    #     '''
-    #     crossover function
-    #     :param InitialArray: initialized population
-    #     :param MutatedArray: mutated population
-    #     :return: crossovered population
-    #     '''
-    #     CrossArray = []
-    #     for i in range(len(InitialArray)):
-    #         arry = []
-    #         for j in range(len(InitialArray[i])):
-    #             Fc = np.random.uniform(low=0, high=1, size=1)[0]
-    #             if Fc >= self.config.F_c:
-    #                 arry.append(MutatedArray[i][j])
-    #             else:
-    #                 arry.append(InitialArray[i][j])
-    #
-    #         CrossArray.append(arry)
-    #
-    #     return CrossArray
-
 
     def crossover(self,InitialArray,MutatedArray,μ_F,μ_Cr):
         '''
