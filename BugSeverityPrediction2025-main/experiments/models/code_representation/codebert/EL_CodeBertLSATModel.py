@@ -177,31 +177,11 @@ class EL_CodeBertLSATModel(nn.Module):
         self.out_layer = nn.Linear(config.hidden_size, config.num_labels)
 
 
-        # Step 1: Calculate class weights and store them
-
-
-        # class_sample_count = [198, 1524, 203, 489]  # 样本数量
-        # total_samples = sum(class_sample_count)
-
-
-        #self.class_weights = torch.FloatTensor([total_samples / count for count in class_sample_count]).to(args.device)
-        # self.class_weights = torch.FloatTensor([total_samples / (count ** 0.5) for count in class_sample_count]).to(
-        #     args.device)
-
-
-        # self.class_weights = torch.FloatTensor([1.0 / count for count in class_sample_count]).to(args.device)
-
-
-        #self.class_weights = torch.FloatTensor([1.0 / (count ** 0.5) for count in class_sample_count]).to(args.device)
-
         # 类别权重初始化
         self.class_weights = None
     def set_class_weights(self, class_weight):
         """设置类权重"""
         self.class_weights = torch.FloatTensor([class_weight[0], class_weight[1], class_weight[2], class_weight[3]]).to(self.args.device)
-
-
-
 
     def forward(
             self,
