@@ -214,10 +214,8 @@ class EL_CodeBertLSATModel(nn.Module):
 
         hidden_states = outputs.hidden_states  # 13*[bs, seq_len, hidden] 第一层是embedding层不需要
         cls_embeddings = hidden_states[1][:, 0, :].unsqueeze(1)  # [bs, 1, hidden]
-        # 将每一层的第一个token(cls向量)提取出来，拼在一起当作Bi-LSTM的输入
+        # 将每一层的第一个token(cls向量)提取出来，拼在一起当作LSTM的输入
         for i in range(2, 13):
-            # for i in range(11, 13):
-            # for i in [6,7,12]:
             cls_embeddings = torch.cat((cls_embeddings, hidden_states[i][:, 0, :].unsqueeze(1)), dim=1)
         # cls_embeddings: [bs, encode_layer=12, hidden]
 
@@ -226,27 +224,6 @@ class EL_CodeBertLSATModel(nn.Module):
 
         logits, alpha = self.classifier_lstm(cls_embeddings, cls_embedding_12th)
         prob = torch.softmax(logits, -1)
-
-        # loss = None
-        # if labels is not None:
-        #     loss_fct = CrossEntropyLoss()
-        #     loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
-        #     return loss, prob
-        # else:
-        #     return prob
-
-
-        # Step 2: Apply class weights to CrossEntropyLoss if labels are provided
-        # loss = None
-        # if labels is not None:
-        #     # Use the class weights here
-        #     loss_fct = CrossEntropyLoss(weight=self.class_weights)
-        #     loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
-        #     return loss, prob
-        # else:
-        #     return prob
-
-
 
         # 计算损失，并应用类别权重
         loss = None
