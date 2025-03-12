@@ -187,17 +187,7 @@ def train(args, train_dataset, model, tokenizer, lr, epoch, batch_size, fine_tun
         losses = []
 
         for step, batch in enumerate(bar):
-            # inputs = batch[0].to(args.device)
-            # labels = batch[1].to(args.device)
-            # num_features = batch[2].to(args.device)
-            #inputs, attention_mask, labels, num_features = [b.to(args.device) for b in batch]
-            # print(len(batch))  # 输出: 4
-            # print(batch)  # 输出: [input_ids, attention_mask, token_type_ids, labels]
-
-            #inputs, attention_mask, labels = [b.to(args.device) for b in batch]
-            inputs = batch[0].to(args.device)
-            # label = batch[1].to(args.device)
-            # num_features = batch[2].to(args.device)
+            inputs = batch[0].to(args.device) 
             attention_mask = batch[1].to(args.device)
             labels = batch[2].to(args.device)
             #print("inputs shape:", inputs.shape)
@@ -206,25 +196,7 @@ def train(args, train_dataset, model, tokenizer, lr, epoch, batch_size, fine_tun
             #loss, logits = model(input_ids=inputs,attention_mask=attention_mask, num_features=num_features, labels=labels)
             #outputs = model(input_ids=inputs, attention_mask=attention_mask, num_features=num_features, labels=labels)
             loss, logits = model(input_ids=inputs, attention_mask=attention_mask, labels=labels)
-
-            # loss = outputs.loss
-
-            # 检查输出类型并处理不同情况
-            # if isinstance(outputs, tuple):
-            #     loss = outputs[0]  # 如果输出是元组，第一个元素是loss
-            # else:
-            #     loss = outputs.loss  # 如果输出是对象，直接获取loss属性
-            #
-            # #logits = outputs.logits
-            #
-            # # 检查输出类型并处理不同情况
-            # if isinstance(outputs, tuple):
-            #     logits = outputs[1]  # 如果输出是元组，第一个元素是loss
-            # else:
-            #     logits = outputs.logits  # 如果输出是对象，直接获取loss属性
-
-            #logits = torch.softmax(logits, -1)#此时logits等同于prob
-
+          
             if args.n_gpu > 1:
                 loss = loss.mean()  # mean() to average on multi-gpu parallel training
 
@@ -302,30 +274,8 @@ def evaluate(args, model, tokenizer):
         # num_features = batch[2].to(args.device)
         attention_mask = batch[1].to(args.device)
         labels = batch[2].to(args.device)
-        with torch.no_grad():
-            # lm_loss, logit = model(inputs, label)
-            #lm_loss, logit = model(input_ids=inputs, num_features=num_features, labels=label)
-            #outputs = model(input_ids=inputs, attention_mask=attention_mask, num_features=num_features, label=label)
+        with torch.no_grad(): 
             lm_loss, logit = model(input_ids=inputs, attention_mask=attention_mask, labels=labels)
-            #loss = outputs.loss
-
-            #lm_loss = outputs.loss
-            # 检查输出类型并处理不同情况
-            # if isinstance(outputs, tuple):
-            #     lm_loss = outputs[0]  # 如果输出是元组，第一个元素是loss
-            # else:
-            #     lm_loss = outputs.loss  # 如果输出是对象，直接获取loss属性
-            #
-            # # logit = outputs.logits
-            #
-            # # 检查输出类型并处理不同情况
-            # if isinstance(outputs, tuple):
-            #     logit = outputs[1]  # 如果输出是元组，第一个元素是loss
-            # else:
-            #     logit = outputs.logits  # 如果输出是对象，直接获取loss属性
-            #
-            # logit = torch.softmax(logit, -1)  # 此时logit等同于prob
-
             eval_loss += lm_loss.mean().item()
             logits.append(logit.cpu().numpy())
             all_labels.append(labels.cpu().numpy())
@@ -395,10 +345,7 @@ def log_result(result, logger):
         logger.info("  %s = %s", key, value)
 
 
-def model_filename(args):
-    # return '{}'.format(
-    #     '{}-bs:{}-tb:{}-eb:{}.bin'.format(args.model_arch, args.block_size, args.train_batch_size,
-    #                                       args.eval_batch_size))
+def model_filename(args): 
     return '{}'.format('{}.bin'.format(args.model_arch))
 
 
@@ -408,12 +355,6 @@ pd.options.mode.chained_assignment = None
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from datetime import datetime
-# import tensorflow as tf
-# from tensorflow.keras import optimizers, callbacks
-# from tensorflow.keras.layers import *
-# from tensorflow.keras.models import *
-# from tensorflow.keras import mixed_precision
-# from tensorflow.keras import backend as K
 import sys
 import inspect
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -433,58 +374,19 @@ class config:
     configure parameters and paths
     '''
     n_classes = 4
-    # TrainValRatio = [0.8, 0.2]
-    # TrainInpPath = '../../data/proced/FordA/train_input.csv'
-    # TrainOupPath = '../../data/proced/FordA/train_target.csv'
     ParaSavePath = '../../para/parameter.csv'
     ModelSavePath = '../../save_model/FordA/'
 
     SavePath = '../../para/FordA/test_result.csv'
-
-    # bounds_cost = [(0, 1),(1,20)]
-
-
-
-    # 少数类的成本在 [0, 1] 范围内
-    # 多数类成本相对于少数类的比率在 [1, 20] 之间
-    # 其他类的比率在 [1, 10] 之间
-    bounds_cost = [(0, 0.1),  # 少数类成本范围
-                   (1, 10),  # 多数类成本比率范围（多数类相对少数类的比率）
-                   (1, 3)]  # 其他类的比率范围（其余类）
-
-
-
-    # batch, timestep, filter, layer, kernel, dropout, lr
-    # bounds_other = [(10, 300),(10, 500),(1, 100),(1, 10),(1, 100),(0,1),(0.001, 0.1)]
-    # bounds_all = bounds_cost + bounds_other
+    bounds_cost = [(0, 0.1),  
+                   (1, 10), 
+                   (1, 3)]  
     bounds_all = bounds_cost
     F_c = 0.7
     EarlyStopStep = 3
-
-    # maxiter = 10
-    # F_list = [(0.8, 1), (0.6, 0.8), (0.4, 0.6), (0.2, 0.4), (0, 0.2), (0, 0.2), (0, 0.2), (0, 0.2), (0, 0.2), (0, 0.2)]
-    # k_list = [50, 30, 20, 10, 5, 5, 5, 5, 5, 5]  # length of popsize must be equal to maxiter
-
-    # maxiter = 5
-    # F_list = [(0.8,1),(0.4,0.6),(0,0.2),(0,0.2),(0,0.2),]
-    # k_list = [ 15, 10, 5, 5, 5]  # length of popsize must be equal to maxiter
-
-    # maxiter = 3
-    # F_list = [(0.4,0.6),(0,0.2),(0,0.2),]
-    # k_list = [ 10, 5, 5]  # length of popsize must be equal to maxiter
-
-
-    # maxiter = 3
-    # maxiter = 2
-
     maxiter = 5
-
     F_list = [(0.4,0.6),(0.2,0.4),(0,0.2),(0,0.2)]
-    # k_list = [ 8,6,4,4]  # length of popsize must be equal to maxiter
-
-    # k_list = [4, 4, 4]
     k_list = [10, 8, 6,  4, 4]
-
     beta=0.5
 
 
@@ -590,12 +492,6 @@ def main():
     elif model_arch == 'EL_CodeBert':
         model = RobertaModel.from_pretrained(args.model_name_or_path, config=config, add_pooling_layer=False)
         model = EL_CodeBertLSATModel(model, config, tokenizer, args)
-    elif model_arch == 'EL_CodeBertwoAttention':
-        model = RobertaModel.from_pretrained(args.model_name_or_path, config=config, add_pooling_layer=False)
-        model = EL_CodeBertwoAttentionModel(model, config, tokenizer, args)
-    elif model_arch == 'EL_CodeBertwoLSTM':
-        model = RobertaModel.from_pretrained(args.model_name_or_path, config=config, add_pooling_layer=False)
-        model = EL_CodeBertwoLSTMModel(model, config, tokenizer, args)
     ##################################
 
     # multi-gpu training (should be after apex fp16 initialization)
