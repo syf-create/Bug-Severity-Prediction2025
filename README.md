@@ -15,7 +15,7 @@ For Getting Started:
 The dataset is derived by preprocessing the defect data from the Defects4J and Bugs.jar datasets, which includes unifying defect severity values and scaling source code metrics. This processed dataset is suitable for model training, validation, and testing.   
 ## models
 
-This folder contains all code and scripts for all of the experiments including classic models, CodeBERT models.
+This folder contains all code and scripts for all of the experiments including classic models, CodeBERT、EL_CodeBert.
 
 ## Running Source Code Metrics Models Experiments
 
