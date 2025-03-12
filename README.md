@@ -10,21 +10,9 @@ For Getting Started:
 -   Python: Python 3 is required.
 -   dependencies: The requirements.txt file is referable.
 
-## data
-
-The `data` folder contains bugs from Defects4tJ and Bugs.jar datasets. This folder contains a preprocessing script that unify bug severity values, scale the source code metrics and create `train`, `val`, and `test` splits.
-
-Running this script using `bash preprocessing.sh` command generates 6 files containing `train`, `val`, `tests` splits in `jsonl` (compatible with CodeBERT experiments) and `csv` (compatible with source code metrics experiments) formats.
-
-Running data preprocessing
-    -   `cd BugSeverityPrediction2025-main/experiments/data`
-    -   `bash preprocessing.sh`
-    -   Copy generated `jsonl` and `csv` files into the dataset folder
-
 ## dataset
 
-Files available in the `dataset` folder represent data for the getting started section (small subset of data). For reproducing paper results the generated files in the `data` folder should be copied to the `dataset` folder that is used by the model training scripts.
-
+The dataset is derived by preprocessing the defect data from the Defects4J and Bugs.jar datasets, which includes unifying defect severity values and scaling source code metrics. This processed dataset is suitable for model training, validation, and testing.   
 ## models
 
 This folder contains all code and scripts for all of the experiments including classic models, CodeBERT models.
