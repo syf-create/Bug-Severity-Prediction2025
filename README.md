@@ -15,7 +15,7 @@ For Getting Started:
 The dataset is derived by preprocessing the defect data from the Defects4J and Bugs.jar datasets, which includes unifying defect severity values and scaling source code metrics. This processed dataset is suitable for model training, validation, and testing.   
 ## models
 
-This folder contains all code and scripts for all of the experiments including classic models, CodeBERT、EL_CodeBert.
+This folder contains all code and scripts for all of the experiments including classic models, CodeBERT、MS_CodeBert.
 
 ## Running Source Code Metrics Models Experiments
 
@@ -26,7 +26,7 @@ This folder contains all code and scripts for all of the experiments including c
 ## Running CS-MSFL Model Experiments
 
 1.  `cd BugSeverityPrediction2025-main/experiments/models/code_representation/codebert`
-2.  Set `EL_CodeBert` as the `model_arch` parameter's value in `train.sh` file
+2.  Set `MS_CodeBert` as the `model_arch` parameter's value in `train.sh` file
 3.  `bash train.sh` for training the model
 4.  `bash inference.sh` for evaluating the model with the `test` split
 5.  Results are generated in the `log` folder。
@@ -41,9 +41,9 @@ This folder contains all code and scripts for all of the experiments including c
 5.  Results are generated in the `log` folder。
 
 ### Ablation Experiment 2: Evaluating the effect of excluding the CWO module
-Method: Edit the main function and comment out or delete the call to RunDE.
+Method: Edit the main function and comment out or delete the call to WeightRefiner.
 1.  `cd BugSeverityPrediction2025-main/experiments/models/code_representation/codebert`
-2.  Set `EL_CodeBert` as the `model_arch` parameter's value in `train.sh` file
+2.  Set `MS_CodeBert` as the `model_arch` parameter's value in `train.sh` file
 3.  `bash train.sh` for training the model
 4.  `bash inference.sh` for evaluating the model with the `test` split
 5.  Results are generated in the `log` folder。
