@@ -482,7 +482,7 @@ def main():
     if model_arch == 'CodeBERT':
         model = RobertaModel.from_pretrained(args.model_name_or_path, config=config, add_pooling_layer=False)
         model = CodeBertModel(model, config, tokenizer, args)
-    elif model_arch == 'EL_CodeBert':
+    elif model_arch == 'MS_CodeBert':
         model = RobertaModel.from_pretrained(args.model_name_or_path, config=config, add_pooling_layer=False)
         model = MS_CodeBertLSATModel(model, config, tokenizer, args)
     ##################################
