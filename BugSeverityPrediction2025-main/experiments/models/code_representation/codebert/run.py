@@ -36,7 +36,7 @@ from models.code_representation.codebert.CodeBertModel import CodeBertModel
 
 from models.evaluation.evaluation import evaluate_result, evaluatelog_result
 
-from models.code_representation.codebert.EL_CodeBertLSATModel import EL_CodeBertLSATModel
+from models.code_representation.codebert.MS_CodeBertLSATModel import MS_CodeBertLSATModel
 
 logger = logging.getLogger(__name__)
 max_feature_length = []
@@ -74,7 +74,7 @@ def codebert(js, tokenizer, args):
     return InputFeatures(source_tokens, source_ids, attention_mask, js['label'], num_features)
 
 
-def el_codebert(js, tokenizer, args):
+def ms_codebert(js, tokenizer, args):
     num_features = []
     code = ' '.join(js['code_no_comment'].split())
     code_tokens = tokenizer.tokenize(code)
@@ -93,7 +93,7 @@ def convert_examples_to_features(js, tokenizer, args):
     if model_arch == 'CodeBERT':
         return codebert(js, tokenizer, args)
     elif model_arch == 'EL_CodeBert':
-        return el_codebert(js, tokenizer, args)
+        return ms_codebert(js, tokenizer, args)
 
 
 class TextDataset(Dataset):
@@ -484,7 +484,7 @@ def main():
         model = CodeBertModel(model, config, tokenizer, args)
     elif model_arch == 'EL_CodeBert':
         model = RobertaModel.from_pretrained(args.model_name_or_path, config=config, add_pooling_layer=False)
-        model = EL_CodeBertLSATModel(model, config, tokenizer, args)
+        model = MS_CodeBertLSATModel(model, config, tokenizer, args)
     ##################################
 
     # multi-gpu training (should be after apex fp16 initialization)
