@@ -16,4 +16,4 @@ python run.py \
 --num_finetune_epochs 5 \
 --train_batch_size 32 \
 --finetune_batch_size 4 \
---model_arch EL_CodeBert
+--model_arch MS_CodeBert
