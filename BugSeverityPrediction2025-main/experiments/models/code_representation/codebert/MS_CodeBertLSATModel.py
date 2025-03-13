@@ -156,7 +156,7 @@ class TextRNNAtten_LSTM(nn.Module):
         return out, alpha
 
 
-class EL_CodeBertLSATModel(nn.Module):
+class MS_CodeBertLSATModel(nn.Module):
     def __init__(self, encoder, config, tokenizer, args):
         super().__init__()
         self.encoder = encoder
