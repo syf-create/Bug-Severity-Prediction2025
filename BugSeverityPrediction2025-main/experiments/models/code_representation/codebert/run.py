@@ -92,7 +92,7 @@ def convert_examples_to_features(js, tokenizer, args):
     model_arch = args.model_arch
     if model_arch == 'CodeBERT':
         return codebert(js, tokenizer, args)
-    elif model_arch == 'EL_CodeBert':
+    elif model_arch == 'MS_CodeBert':
         return ms_codebert(js, tokenizer, args)
 
 
