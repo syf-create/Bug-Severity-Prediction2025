@@ -378,9 +378,9 @@ class config:
     ModelSavePath = '../../save_model/FordA/'
 
     SavePath = '../../para/FordA/test_result.csv'
-    bounds_cost = [(0, 0.1),  
-                   (1, 10), 
-                   (1, 3)]  
+    bounds_cost = [(0, 1),  
+                   (0，0.1), 
+                   (0，0.5)]  
     bounds_all = bounds_cost
     F_c = 0.7
     EarlyStopStep = 3
