@@ -38,9 +38,6 @@ from models.evaluation.evaluation import evaluate_result, evaluatelog_result
 
 from models.code_representation.codebert.EL_CodeBertLSATModel import EL_CodeBertLSATModel
 
-from models.code_representation.codebert.EL_CodeBertwoAttentionModel import EL_CodeBertwoAttentionModel
-
-from models.code_representation.codebert.EL_CodeBertwoLSTMModel import EL_CodeBertwoLSTMModel
 logger = logging.getLogger(__name__)
 max_feature_length = []
 max_code_length = []
@@ -97,10 +94,6 @@ def convert_examples_to_features(js, tokenizer, args):
         return codebert(js, tokenizer, args)
     elif model_arch == 'EL_CodeBert':
         return el_codebert(js, tokenizer, args)
-    elif model_arch == 'EL_CodeBertwoAttention':
-        return el_codebertwoattention(js, tokenizer, args)
-    elif model_arch == 'EL_CodeBertwoLSTM':
-        return el_codebertwolstm(js, tokenizer, args)
 
 
 class TextDataset(Dataset):
@@ -511,7 +504,7 @@ def main():
 
         model=train(args, train_dataset, model, tokenizer, lr=args.finetune_learning_rate, epoch=args.num_finetune_epochs,
               batch_size=args.finetune_batch_size, fine_tune=True)
-        # RunDE(0, tokenizer, args, model)
+        # WeightRefiner(0, tokenizer, args, model)
 
     # Evaluation
     results = {}
